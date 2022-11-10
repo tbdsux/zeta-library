@@ -1,0 +1,7 @@
+# Spacefile Docs: https://go.deta.dev/docs/spacefile/v0
+v: 0
+micros:
+    - name: zeta-library
+      src: .
+      engine: svelte-kit
+      primary: true
