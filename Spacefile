@@ -2,6 +2,17 @@
 v: 0
 micros:
     - name: zeta-library
-      src: .
+      src: ./frontend
       engine: svelte-kit
       primary: true
+    - name: api
+      src: ./api
+      engine: custom
+      commands:
+        - go get
+        - go build .
+      run: ./api
+      include:
+        - api
+      path: api
+
