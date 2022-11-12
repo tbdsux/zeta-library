@@ -1,6 +1,8 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import { apiUrl } from '$lib/config';
 	import Modal from '$lib/modal.svelte';
-	import type { CollectionTypeProps } from '$lib/types/collection';
+	import type { CollectionTypeProps, PartialCollectionProps } from '$lib/types/collection';
 	import {
 		DialogTitle,
 		Listbox,
@@ -43,8 +45,35 @@
 	];
 
 	let selectedType = collectionTypes[0];
-
+	let inputName: string = '';
+	let inputDescription: string = '';
 	let isOpen = false;
+
+	const createCollection = async () => {
+		if (inputName == '' || selectedType.value == '') return;
+
+		const body: PartialCollectionProps = {
+			name: inputName,
+			type: selectedType.value,
+			description: inputDescription
+		};
+
+		const r = await fetch(apiUrl + '/collections/create', {
+			method: 'POST',
+			headers: {
+				'content-type': 'application/json'
+			},
+			body: JSON.stringify(body)
+		});
+		const data = await r.json();
+
+		if (!r.ok) {
+			// error in here
+		}
+
+		isOpen = false;
+		goto(`/collection/${data.data.id}`);
+	};
 </script>
 
 <Modal
@@ -60,6 +89,7 @@
 		<div class="flex flex-col my-1">
 			<label for="collection-name" class="text-gray-700">Collection Name</label>
 			<input
+				bind:value={inputName}
 				type="text"
 				name="collection-name"
 				id=""
@@ -123,6 +153,7 @@
 		<div class="flex flex-col my-1">
 			<label for="collection-description" class="text-gray-700">Description</label>
 			<textarea
+				bind:value={inputDescription}
 				type="text"
 				name="collection-description"
 				id=""
@@ -133,6 +164,7 @@
 
 		<div class="text-right mt-6">
 			<button
+				on:click={createCollection}
 				class="inline-flex items-center py-3 px-6 rounded-lg bg-indigo-400 hover:bg-indigo-500 duration-300 text-white text-sm"
 			>
 				<svg

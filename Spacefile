@@ -1,18 +1,22 @@
 # Spacefile Docs: https://go.deta.dev/docs/spacefile/v0
 v: 0
 micros:
-    - name: zeta-library
-      src: ./frontend
-      engine: svelte-kit
-      primary: true
-    - name: api
-      src: ./api
-      engine: custom
-      commands:
-        - go get
-        - go build .
-      run: ./api
-      include:
-        - api
-      path: api
-
+  - name: zeta-library
+    src: ./frontend
+    engine: svelte-kit
+    primary: true
+    presets:
+      env:
+        - name: THEMOVIEDB_API_KEY
+          description: Your API Key from TheMovieDb.org
+          default: ""
+  - name: api
+    src: ./api
+    engine: custom
+    commands:
+      - go get
+      - go build .
+    run: ./api
+    include:
+      - api
+    path: api
