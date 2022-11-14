@@ -14,7 +14,8 @@
 
 <div class="w-11/12 mx-auto grid grid-cols-3 gap-12 mt-6">
 	{#each data.collections as collection}
-		<div
+		<a
+			href={`/collection/${collection.id}`}
 			class="py-12 px-8 flex items-center rounded-lg relative shadow-lg cursor-pointer bg-indigo-400 hover:bg-indigo-500 text-white duration-300"
 		>
 			<div>
@@ -28,6 +29,6 @@
 				<span class="absolute bottom-2 left-2">( 12 items )</span>
 				<span class="absolute bottom-2 right-2">{collection.type}</span>
 			</div>
-		</div>
+		</a>
 	{/each}
 </div>

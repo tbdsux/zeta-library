@@ -1,10 +1,9 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { collectionTypes } from '$lib/collection';
-	import { apiUrl } from '$lib/config';
+	import { collectionTypes, filterCollection } from '$lib/collection';
 	import Modal from '$lib/modal.svelte';
-	import type { PartialCollectionProps } from '$lib/types/collection';
+	import type { CollectionProps } from '$lib/types/collection';
 	import {
+		DialogDescription,
 		DialogTitle,
 		Listbox,
 		ListboxButton,
@@ -12,54 +11,60 @@
 		ListboxOptions,
 		Transition
 	} from '@rgossiaux/svelte-headlessui';
-	import { SelectorIcon, CheckIcon } from '@rgossiaux/svelte-heroicons/solid';
+	import {
+		CheckIcon,
+		CogIcon,
+		PencilIcon,
+		SelectorIcon,
+		TrashIcon
+	} from '@rgossiaux/svelte-heroicons/solid';
 
-	let selectedType = collectionTypes[0];
-	let inputName: string = '';
-	let inputDescription: string = '';
-	let isOpen = false;
+	export let collection: CollectionProps;
 
-	const createCollection = async () => {
-		if (inputName == '' || selectedType.value == '') return;
+	let isOpen = true;
+	let inputNewName = collection.name;
+	let newSelectedType = filterCollection(collection.type) ?? collectionTypes[0];
+	let inputNewDescription = collection.description;
 
-		const body: PartialCollectionProps = {
-			name: inputName,
-			type: selectedType.value,
-			description: inputDescription
-		};
-
-		const r = await fetch(apiUrl + '/collections/create', {
-			method: 'POST',
-			headers: {
-				'content-type': 'application/json'
-			},
-			body: JSON.stringify(body)
-		});
-		const data = await r.json();
-
-		if (!r.ok) {
-			// error in here
-		}
-
-		isOpen = false;
-		goto(`/collection/${data.data.id}`);
-	};
+	const updateCollection = () => {};
+	const removeCollection = () => {};
 </script>
 
-<Modal
-	{isOpen}
-	closeModal={() => {
-		isOpen = false;
-	}}
-	className="max-w-xl"
->
-	<DialogTitle class="text-xl font-extrabold text-indigo-500">Create New Collection</DialogTitle>
+<Modal {isOpen} closeModal={() => (isOpen = false)} className="max-w-2xl">
+	<div class="flex items-center justify-between">
+		<div>
+			<DialogTitle class="text-lg font-bold text-gray-700">Collection Settings</DialogTitle>
+			<DialogDescription class="text-gray-600">
+				Remove / update the collection's details
+			</DialogDescription>
+		</div>
 
-	<div class="p-6">
+		<button
+			on:click={removeCollection}
+			title="Delete collection"
+			class="p-2 rounded-lg bg-red-400 hover:bg-red-500 text-white duration-300"
+		>
+			<TrashIcon class="h-4 w-4" aria-hidden="true" />
+		</button>
+	</div>
+
+	<div class="mt-6 w-5/6 mx-auto">
 		<div class="flex flex-col my-1">
-			<label for="collection-name" class="text-gray-700">Collection Name</label>
+			<label for="collection-id" class="text-gray-700">ID / Key</label>
 			<input
-				bind:value={inputName}
+				value={collection.id}
+				type="text"
+				name="collection-id"
+				id=""
+				disabled
+				class="py-2 px-5 rounded-lg border bg-gray-200 text-gray-700"
+			/>
+		</div>
+
+		<div class="flex flex-col my-1">
+			<label for="collection-name" class="text-gray-700">Name</label>
+			<input
+				bind:value={inputNewName}
 				type="text"
 				name="collection-name"
 				id=""
@@ -70,16 +75,16 @@
 
 		<div class="flex flex-col my-1">
 			<label for="collection-description" class="text-gray-700">Type</label>
-			<Listbox value={selectedType} on:change={(e) => (selectedType = e.detail)}>
+			<Listbox value={newSelectedType} on:change={(e) => (newSelectedType = e.detail)}>
 				<div class="relative mt-1">
 					<ListboxButton
 						class="relative w-full py-3 pl-5 pr-10 text-left bg-white rounded-lg border hover:bg-gray-100 duration-300 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm text-gray-700"
 					>
 						<span class="block truncate">
-							{#if selectedType.value == ''}
+							{#if newSelectedType.value == ''}
 								Select a type...
 							{:else}
-								{selectedType.name}
+								{newSelectedType.name}
 							{/if}
 						</span>
 						<span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
@@ -123,7 +128,7 @@
 		<div class="flex flex-col my-1">
 			<label for="collection-description" class="text-gray-700">Description</label>
 			<textarea
-				bind:value={inputDescription}
+				bind:value={inputNewDescription}
 				type="text"
 				name="collection-description"
 				id=""
@@ -134,23 +139,10 @@
 
 		<div class="text-right mt-6">
 			<button
-				on:click={createCollection}
+				on:click={updateCollection}
 				class="inline-flex items-center py-3 px-6 rounded-lg bg-indigo-400 hover:bg-indigo-500 duration-300 text-white text-sm"
 			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					fill="none"
-					viewBox="0 0 24 24"
-					stroke-width="1.5"
-					stroke="currentColor"
-					class="w-3 h-3 mr-1"
-				>
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						d="M12 10.5v6m3-3H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"
-					/>
-				</svg> create
+				<PencilIcon /> Update
 			</button>
 		</div>
 	</div>
@@ -158,22 +150,9 @@
 
 <button
 	on:click={() => (isOpen = true)}
-	class="inline-flex items-center py-2 px-6 rounded-lg bg-indigo-400 hover:bg-indigo-500 duration-300 text-white text-sm"
+	title="Settings"
+	class="p-2 rounded-lg m-1 inline-flex items-center bg-gray-400 hover:bg-gray-500 text-white duration-300"
 >
-	<svg
-		xmlns="http://www.w3.org/2000/svg"
-		fill="none"
-		viewBox="0 0 24 24"
-		stroke-width="1.5"
-		stroke="currentColor"
-		class="w-5 h-5 mr-1"
-	>
-		<path
-			stroke-linecap="round"
-			stroke-linejoin="round"
-			d="M12 10.5v6m3-3H9m4.06-7.19l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"
-		/>
-	</svg>
-
-	new collection
+	<CogIcon class="h-4 w-4" aria-hidden="true" />
+	<small class="ml-1">Settings</small>
 </button>

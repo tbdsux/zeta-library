@@ -10,7 +10,7 @@
 	import NewCollection from './new-collection.svelte';
 </script>
 
-<header class="py-8">
+<header class="py-4">
 	<div class="flex items-center justify-between w-5/6 mx-auto">
 		<div>
 			<h1 class="tracking-wide text-2xl font-black text-indigo-500">zeta</h1>
