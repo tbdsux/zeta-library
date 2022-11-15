@@ -9,18 +9,8 @@ import (
 
 const reserved_base_name = "_all_collections"
 
-var CollectionTypes = []string{"series", "movies", "asian_drama", "anime", "books", "manga"}
-
-type CollectionProps struct {
-	Name        string `json:"name"`
-	ID          string `json:"id,omitempty"`
-	Key         string `json:"key,omitempty"`
-	Type        string `json:"type"`
-	Description string `json:"description"`
-}
-
 var CreateCollection = func(c *fiber.Ctx) error {
-	body := &CollectionProps{}
+	body := &lib.CollectionProps{}
 
 	if err := c.BodyParser(body); err != nil {
 		return c.Status(500).JSON(lib.APIResponse{
@@ -36,7 +26,7 @@ var CreateCollection = func(c *fiber.Ctx) error {
 		})
 	}
 
-	if !lib.Includes(body.Type, CollectionTypes) {
+	if !lib.Includes(body.Type, lib.CollectionTypes) {
 		return c.Status(400).JSON(lib.APIResponse{
 			Error:   true,
 			Message: fmt.Sprintf("Invalid collection type: `%s`", body.Type),

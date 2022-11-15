@@ -15,7 +15,7 @@ var FetchAllCollections = func(c *fiber.Ctx) error {
 		})
 	}
 
-	var cols []*CollectionProps
+	var cols []*lib.CollectionProps
 	_, err = db.Fetch(&base.FetchInput{
 		Q:    base.Query{},
 		Dest: &cols,

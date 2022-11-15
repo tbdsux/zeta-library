@@ -1,4 +1,4 @@
-package col
+package items
 
 import (
 	"github.com/TheBoringDude/zeta-library/api/lib"
@@ -6,8 +6,9 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-var GetCollection = func(c *fiber.Ctx) error {
+var RemoveItem = func(c *fiber.Ctx) error {
 	id := c.Params("id")
+	itemId := c.Params("itemId")
 
 	db, err := lib.InitBase("_all_collections")
 	if err != nil {
@@ -17,18 +18,13 @@ var GetCollection = func(c *fiber.Ctx) error {
 		})
 	}
 
-	collection := &lib.CollectionProps{}
-	err = db.Get(id, collection)
-
-	// if not found
+	_, err = lib.GetCollection(db, id)
 	if err == deta.ErrNotFound {
 		return c.Status(404).JSON(lib.APIResponse{
 			Error:   true,
 			Message: "Collection not found.",
 		})
 	}
-
-	// other errors
 	if err != nil {
 		return c.Status(500).JSON(lib.APIResponse{
 			Error:   true,
@@ -36,8 +32,26 @@ var GetCollection = func(c *fiber.Ctx) error {
 		})
 	}
 
-	return c.Status(200).JSON(lib.APIResponse{
+	itemsDB, err := lib.InitBase(id)
+	if err != nil {
+		return c.Status(500).JSON(lib.APIResponse{
+			Error:   true,
+			Message: err.Error(),
+		})
+	}
+
+	if err = itemsDB.Delete(itemId); err != nil {
+		return c.Status(500).JSON(lib.APIResponse{
+			Error:   true,
+			Message: err.Error(),
+		})
+	}
+
+	return c.JSON(lib.APIResponse{
 		Error: false,
-		Data:  collection,
+		Data: fiber.Map{
+			"Id": id,
+		},
+		Message: "Successfully removed item from collection's list.",
 	})
 }

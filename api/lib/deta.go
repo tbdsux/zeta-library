@@ -13,3 +13,8 @@ func InitBase(name string) (*base.Base, error) {
 
 	return base.New(db, name)
 }
+
+func GetCollection(base *base.Base, id string) (col *CollectionProps, err error) {
+	err = base.Get(id, col)
+	return
+}
