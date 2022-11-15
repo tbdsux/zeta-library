@@ -7,4 +7,5 @@ export interface CollectionItemProps {
 	item_id: string;
 	url: string;
 	date_added?: number;
+	key?: string; // auto added by base
 }

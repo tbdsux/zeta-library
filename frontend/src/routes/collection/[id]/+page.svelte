@@ -1,10 +1,9 @@
 <script lang="ts">
-	import { ExternalLinkIcon, XIcon } from '@rgossiaux/svelte-heroicons/solid';
+	import { ExternalLinkIcon } from '@rgossiaux/svelte-heroicons/solid';
 	import type { PageData } from './$types';
+	import RemoveItem from './RemoveItem.svelte';
 
 	export let data: PageData;
-
-	const removeItem = (id: string) => {};
 </script>
 
 <div class="grid grid-cols-5 gap-6">
@@ -26,13 +25,7 @@
 
 					<strong class="text-white line-clamp-3">{item.name}</strong>
 
-					<button
-						on:click={() => {}}
-						class="text-white bg-red-400 hover:bg-red-500 duration-300 py-2 px-6 rounded-lg inline-flex items-center text-sm mt-6"
-					>
-						<XIcon class="h-4 w-4 ml-1" aria-hidden="true" />
-						Remove Item
-					</button>
+					<RemoveItem collectionId={data.collection.id} {item} />
 				</div>
 			</div>
 
