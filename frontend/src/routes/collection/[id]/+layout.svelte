@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { PlusIcon } from '@rgossiaux/svelte-heroicons/solid';
-	import Settings from './settings.svelte';
+	import AddItem from './AddItem.svelte';
+	import AddItemContext from './AddItemContext.svelte';
+	import Settings from './Settings.svelte';
 
-	const { collection } = $page.data;
+	const { collection, items } = $page.data;
 </script>
 
 <svelte:head>
@@ -24,13 +25,9 @@
 	<div class="inline-flex items-center">
 		<Settings {collection} />
 
-		<button
-			title="Add Item"
-			class="py-2 px-6 rounded-lg m-1 inline-flex items-center bg-blue-400 hover:bg-blue-500 text-white duration-300"
-		>
-			<PlusIcon class="h-4 w-4" aria-hidden="true" />
-			<small class="ml-1 uppercase font-medium">Add Item</small>
-		</button>
+		<AddItemContext {collection} {items}>
+			<AddItem />
+		</AddItemContext>
 	</div>
 </div>
 

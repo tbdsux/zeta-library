@@ -1,11 +1,20 @@
+export type CollectionTypes =
+	| 'series'
+	| 'movies'
+	| 'anime'
+	| 'manga'
+	| 'asian_drama'
+	| 'books'
+	| '';
+
 export interface CollectionTypeProps {
 	name: string;
-	value: string;
+	value: CollectionTypes;
 }
 
 export interface PartialCollectionProps {
 	name: string;
-	type: string;
+	type: CollectionTypes;
 	description: string;
 }
 

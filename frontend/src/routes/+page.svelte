@@ -16,7 +16,7 @@
 	{#each data.collections as collection}
 		<a
 			href={`/collection/${collection.id}`}
-			class="py-12 px-8 flex items-center rounded-lg relative shadow-lg cursor-pointer bg-indigo-400 hover:bg-indigo-500 text-white duration-300"
+			class="py-12 px-8 flex items-center rounded-lg relative shadow-lg bg-indigo-400 hover:bg-indigo-500 text-white duration-300"
 		>
 			<div>
 				<strong class="text-xl">{collection.name}</strong>

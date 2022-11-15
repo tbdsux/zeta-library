@@ -1,18 +1,27 @@
 import { apiUrl } from '$lib/config';
+import type { CollectionItemProps } from '$lib/items/props';
 import type { APIResponseProps } from '$lib/types/api';
 import type { CollectionProps } from '$lib/types/collection';
 import { error } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = async ({ fetch, params }) => {
-	const res = await fetch(apiUrl + `/collections/get/${params.id}`);
-	const data: APIResponseProps<CollectionProps> = await res.json();
+	const colRes = await fetch(apiUrl + `/collections/get/${params.id}`);
+	const itemsRes = await fetch(apiUrl + `/items/${params.id}`);
 
-	if (res.status != 200) {
-		throw error(res.status, data.message);
+	const colData: APIResponseProps<CollectionProps> = await colRes.json();
+	const itemsData: APIResponseProps<CollectionItemProps[]> = await itemsRes.json();
+
+	if (colRes.status != 200) {
+		throw error(colRes.status, colData.message);
+	}
+
+	if (itemsRes.status != 200) {
+		throw error(itemsRes.status, itemsData.message);
 	}
 
 	return {
-		collection: data.data
+		collection: colData.data,
+		items: itemsData.data
 	};
 };

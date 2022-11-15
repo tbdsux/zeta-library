@@ -21,7 +21,7 @@
 
 	export let collection: CollectionProps;
 
-	let isOpen = true;
+	let isOpen = false;
 	let inputNewName = collection.name;
 	let newSelectedType = filterCollection(collection.type) ?? collectionTypes[0];
 	let inputNewDescription = collection.description;
@@ -78,7 +78,7 @@
 			<Listbox value={newSelectedType} on:change={(e) => (newSelectedType = e.detail)}>
 				<div class="relative mt-1">
 					<ListboxButton
-						class="relative w-full py-3 pl-5 pr-10 text-left bg-white rounded-lg border hover:bg-gray-100 duration-300 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm text-gray-700"
+						class="relative w-full py-3 pl-5 pr-10 text-left bg-white rounded-lg border hover:bg-gray-100 duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm text-gray-700"
 					>
 						<span class="block truncate">
 							{#if newSelectedType.value == ''}
