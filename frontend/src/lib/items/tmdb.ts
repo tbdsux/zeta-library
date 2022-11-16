@@ -8,7 +8,7 @@ export const seriesFetcher = async (query: string) => {
 	const results: CollectionItemProps[] = [];
 	for (const i of data.results) {
 		results.push({
-			name: i.name,
+			name: i.original_name,
 			image: i.poster_path ? TMDB_IMG + i.poster_path : null,
 			item_id: String(i.id),
 			type: 'series',
@@ -26,7 +26,7 @@ export const movieFetcher = async (query: string) => {
 	const results: CollectionItemProps[] = [];
 	for (const i of data.results) {
 		results.push({
-			name: i.name,
+			name: i.original_title,
 			image: i.poster_path ? TMDB_IMG + i.poster_path : null,
 			item_id: String(i.id),
 			type: 'movies',
