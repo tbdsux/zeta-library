@@ -7,7 +7,7 @@ micros:
     primary: true
     presets:
       env:
-        - name: THEMOVIEDB_API_KEY
+        - name: PUBLIC_THEMOVIEDB_API_KEY
           description: Your API Key from TheMovieDb.org
           default: ""
   - name: api
