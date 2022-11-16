@@ -1,5 +1,7 @@
 <script lang="ts">
+	import { invalidate } from '$app/navigation';
 	import { collectionTypes, filterCollection } from '$lib/collection';
+	import { apiUrl } from '$lib/config';
 	import Modal from '$lib/modal.svelte';
 	import type { CollectionProps } from '$lib/types/collection';
 	import {
@@ -11,23 +13,57 @@
 		ListboxOptions,
 		Transition
 	} from '@rgossiaux/svelte-headlessui';
-	import {
-		CheckIcon,
-		CogIcon,
-		PencilIcon,
-		SelectorIcon,
-		TrashIcon
-	} from '@rgossiaux/svelte-heroicons/solid';
+	import { CheckIcon, CogIcon, PencilIcon, SelectorIcon } from '@rgossiaux/svelte-heroicons/solid';
+	import { getPageContext } from './context';
+	import RemoveCollection from './RemoveCollection.svelte';
 
-	export let collection: CollectionProps;
+	const { collection } = getPageContext();
 
 	let isOpen = false;
 	let inputNewName = collection.name;
 	let newSelectedType = filterCollection(collection.type) ?? collectionTypes[0];
 	let inputNewDescription = collection.description;
 
-	const updateCollection = () => {};
-	const removeCollection = () => {};
+	let updating = false;
+
+	const updateCollection = async () => {
+		updating = true;
+
+		const body: Record<string, any> = {};
+
+		if (inputNewName.trim() != collection.name) {
+			body.name = inputNewName.trim();
+		}
+		if (inputNewDescription.trim() != collection.description) {
+			body.description = inputNewDescription.trim();
+		}
+
+		if (Object.keys(body).length == 0) {
+			// nothing to update in here
+			return;
+		}
+
+		const r = await fetch(apiUrl + `/collections/${collection.id}`, {
+			method: 'PATCH',
+			body: JSON.stringify(body),
+			headers: {
+				'content-type': 'application/json'
+			}
+		});
+
+		const data = await r.json();
+		if (!r.ok) {
+			// error in here
+		}
+
+		// re-load
+		invalidate(apiUrl + `/collections/get/${collection.id}`);
+
+		updating = false;
+
+		// close modal
+		isOpen = false;
+	};
 </script>
 
 <Modal {isOpen} closeModal={() => (isOpen = false)} className="max-w-2xl">
@@ -39,13 +75,7 @@
 			</DialogDescription>
 		</div>
 
-		<button
-			on:click={removeCollection}
-			title="Delete collection"
-			class="p-2 rounded-lg bg-red-400 hover:bg-red-500 text-white duration-300"
-		>
-			<TrashIcon class="h-4 w-4" aria-hidden="true" />
-		</button>
+		<RemoveCollection />
 	</div>
 
 	<div class="mt-6 w-5/6 mx-auto">
@@ -62,23 +92,15 @@
 		</div>
 
 		<div class="flex flex-col my-1">
-			<label for="collection-name" class="text-gray-700">Name</label>
-			<input
-				bind:value={inputNewName}
-				type="text"
-				name="collection-name"
-				id=""
-				class="py-2 px-5 rounded-lg border text-gray-700"
-				placeholder="Enter collection name"
-			/>
-		</div>
-
-		<div class="flex flex-col my-1">
 			<label for="collection-description" class="text-gray-700">Type</label>
-			<Listbox value={newSelectedType} on:change={(e) => (newSelectedType = e.detail)}>
+			<Listbox
+				value={newSelectedType}
+				disabled={true}
+				on:change={(e) => (newSelectedType = e.detail)}
+			>
 				<div class="relative mt-1">
 					<ListboxButton
-						class="relative w-full py-3 pl-5 pr-10 text-left bg-white rounded-lg border hover:bg-gray-100 duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm text-gray-700"
+						class="disabled:bg-gray-200 relative w-full py-3 pl-5 pr-10 text-left bg-white rounded-lg border hover:bg-gray-100 duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm text-gray-700"
 					>
 						<span class="block truncate">
 							{#if newSelectedType.value == ''}
@@ -126,6 +148,18 @@
 		</div>
 
 		<div class="flex flex-col my-1">
+			<label for="collection-name" class="text-gray-700">Name</label>
+			<input
+				bind:value={inputNewName}
+				type="text"
+				name="collection-name"
+				id=""
+				class="py-2 px-5 rounded-lg border text-gray-700"
+				placeholder="Enter collection name"
+			/>
+		</div>
+
+		<div class="flex flex-col my-1">
 			<label for="collection-description" class="text-gray-700">Description</label>
 			<textarea
 				bind:value={inputNewDescription}
@@ -139,10 +173,16 @@
 
 		<div class="text-right mt-6">
 			<button
+				disabled={updating}
 				on:click={updateCollection}
-				class="inline-flex items-center py-3 px-6 rounded-lg bg-indigo-400 hover:bg-indigo-500 duration-300 text-white text-sm"
+				class="inline-flex items-center py-3 px-6 rounded-lg bg-indigo-400 disabled:opacity-90 disabled:hover:bg-indigo-400 hover:bg-indigo-500 duration-300 text-white text-sm"
 			>
-				<PencilIcon /> Update
+				<PencilIcon />
+				{#if updating}
+					Updating...
+				{:else}
+					Update
+				{/if}
 			</button>
 		</div>
 	</div>

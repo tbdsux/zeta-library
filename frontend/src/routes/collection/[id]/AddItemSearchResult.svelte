@@ -6,9 +6,9 @@
 		PlusCircleIcon,
 		XIcon
 	} from '@rgossiaux/svelte-heroicons/solid';
-	import { getAddItemsContext } from './additem';
+	import { getPageContext } from './context';
 
-	const { itemsKeys } = getAddItemsContext();
+	const { itemsKeys } = getPageContext();
 
 	export let searchResults: CollectionItemProps[];
 	export let selectedItems: CollectionItemProps[];

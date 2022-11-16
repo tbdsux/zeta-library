@@ -2,7 +2,7 @@
 	import type { CollectionItemProps } from '$lib/items/props';
 	import type { CollectionProps } from '$lib/types/collection';
 	import { setContext } from 'svelte';
-	import { additemKey, type AddItemContextProps } from './additem';
+	import { additemKey, type ContextProps } from './context';
 
 	export let collection: CollectionProps;
 	export let items: CollectionItemProps[];
@@ -14,7 +14,7 @@
 		}
 	}
 
-	setContext<AddItemContextProps>(additemKey, { collection, items, itemsKeys });
+	setContext<ContextProps>(additemKey, { collection, items, itemsKeys });
 </script>
 
 <div>

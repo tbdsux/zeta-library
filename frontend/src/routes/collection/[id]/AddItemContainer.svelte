@@ -3,14 +3,13 @@
 	import { apiUrl } from '$lib/config';
 	import { fetcher } from '$lib/items/fetcher';
 	import type { CollectionItemProps } from '$lib/items/props';
-	import type { CollectionProps } from '$lib/types/collection';
 	import { DialogDescription, DialogTitle } from '@rgossiaux/svelte-headlessui';
 	import { CheckIcon, SearchIcon } from '@rgossiaux/svelte-heroicons/solid';
-	import { getAddItemsContext } from './additem';
+	import { getPageContext } from './context';
 	import AddItemPreview from './AddItemPreview.svelte';
 	import AddItemSearchResult from './AddItemSearchResult.svelte';
 
-	const { collection } = getAddItemsContext();
+	const { collection } = getPageContext();
 	export let isOpen: boolean;
 
 	let inputQuery: string = '';

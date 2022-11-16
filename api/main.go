@@ -32,6 +32,8 @@ func main() {
 	collection.Post("/create", col.CreateCollection)
 	collection.Get("/get/:id", col.GetCollection)
 	collection.Get("/", col.FetchAllCollections)
+	collection.Patch("/:id", col.UpdateCollection)
+	collection.Delete("/:id", col.DeleteCollection)
 
 	// `/items` route
 	_items.Patch("/", items.UpdateItems)

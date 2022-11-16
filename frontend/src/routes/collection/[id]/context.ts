@@ -4,10 +4,10 @@ import { getContext } from 'svelte';
 
 export const additemKey = Symbol();
 
-export interface AddItemContextProps {
+export interface ContextProps {
 	collection: CollectionProps;
 	items: CollectionItemProps[];
 	itemsKeys: string[];
 }
 
-export const getAddItemsContext = () => getContext<AddItemContextProps>(additemKey);
+export const getPageContext = () => getContext<ContextProps>(additemKey);
