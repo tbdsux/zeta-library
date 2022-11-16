@@ -19,7 +19,7 @@
 			<p class="ml-2 text-sm py-0.5 px-2 rounded-lg bg-gray-400 text-white">{collection.type}</p>
 		</div>
 		<p class="text-lg text-gray-700">{collection.description}</p>
-		<small class="mt-1 text-gray-600">12 items</small>
+		<small class="mt-1 text-gray-600">{items.length} items</small>
 	</div>
 
 	<div class="inline-flex items-center">

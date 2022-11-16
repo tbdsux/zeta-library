@@ -26,7 +26,6 @@
 			</div>
 
 			<div class="text-sm">
-				<span class="absolute bottom-2 left-2">( 12 items )</span>
 				<span class="absolute bottom-2 right-2">{collection.type}</span>
 			</div>
 		</a>

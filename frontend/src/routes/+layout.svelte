@@ -12,10 +12,10 @@
 
 <header class="py-4">
 	<div class="flex items-center justify-between w-5/6 mx-auto">
-		<div>
+		<a href="/">
 			<h1 class="tracking-wide text-2xl font-black text-indigo-500">zeta</h1>
 			<p class="text-sm text-gray-700">Your personal library collections</p>
-		</div>
+		</a>
 
 		<NewCollection />
 	</div>
