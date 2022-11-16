@@ -16,6 +16,7 @@ export interface PartialCollectionProps {
 	name: string;
 	type: CollectionTypes;
 	description: string;
+	created_at: number;
 }
 
 export interface CollectionProps extends PartialCollectionProps {

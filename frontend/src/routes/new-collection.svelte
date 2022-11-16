@@ -25,7 +25,8 @@
 		const body: PartialCollectionProps = {
 			name: inputName,
 			type: selectedType.value,
-			description: inputDescription
+			description: inputDescription,
+			created_at: Math.floor(new Date().getTime() / 1000)
 		};
 
 		const r = await fetch(apiUrl + '/collections/create', {

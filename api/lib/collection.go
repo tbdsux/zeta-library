@@ -8,4 +8,5 @@ type CollectionProps struct {
 	Key         string `json:"key,omitempty"`
 	Type        string `json:"type"`
 	Description string `json:"description"`
+	CreatedAt   int    `json:"created_at"`
 }

@@ -13,7 +13,7 @@
 </div>
 
 <div class="w-11/12 mx-auto grid grid-cols-3 gap-12 mt-6">
-	{#each data.collections as collection}
+	{#each data.collections.sort((x, y) => y.created_at - x.created_at) as collection}
 		<a
 			href={`/collection/${collection.id}`}
 			class="py-12 px-8 flex items-center rounded-lg relative shadow-lg bg-indigo-400 hover:bg-indigo-500 text-white duration-300"
