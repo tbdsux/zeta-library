@@ -1,7 +1,7 @@
-import { moviedbKey } from '$lib/config';
-
-const MOVIE_API = `https://api.themoviedb.org/3/search/movie?api_key=${moviedbKey}&language=en-US&query=[query]&page=1&include_adult=true`;
-const SERIES_API = `https://api.themoviedb.org/3/search/tv?api_key=${moviedbKey}&language=en-US&query=[query]&page=1&include_adult=true`;
+const MOVIE_API =
+	'https://api.themoviedb.org/3/search/movie?api_key=[apikey]&language=en-US&query=[query]&page=1&include_adult=true';
+const SERIES_API =
+	'https://api.themoviedb.org/3/search/tv?api_key=[apikey]&language=en-US&query=[query]&page=1&include_adult=true';
 const ANIME_API = 'https://api.jikan.moe/v4/anime?q=[query]';
 const MANGA_API = 'https://api.jikan.moe/v4/manga?q=[query]';
 const BOOKS_API = 'https://openlibrary.org/search.json?title=[query]&page=1&limit=20';

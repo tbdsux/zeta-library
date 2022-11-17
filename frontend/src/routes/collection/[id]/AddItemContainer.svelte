@@ -9,7 +9,7 @@
 	import AddItemPreview from './AddItemPreview.svelte';
 	import AddItemSearchResult from './AddItemSearchResult.svelte';
 
-	const { collection } = getPageContext();
+	const { collection, settings } = getPageContext();
 	export let isOpen: boolean;
 
 	let inputQuery: string = '';
@@ -25,10 +25,15 @@
 	const search = async () => {
 		if (inputQuery == '') return;
 
+		// do not search if missing api key in app settings
+		if (collection.type == 'movies' || collection.type == 'series') {
+			if (settings.moviedbApiKey == '') return;
+		}
+
 		fetching = true;
 
 		try {
-			searchResults = await fetcher[collection.type](inputQuery);
+			searchResults = await fetcher[collection.type](inputQuery, settings.moviedbApiKey);
 		} catch (e) {
 			error = true;
 			console.error(e);
@@ -77,6 +82,12 @@
 			Add items to the collection
 			<span class="font-medium">{collection.name}</span>
 		</DialogDescription>
+
+		{#if collection.type == 'movies' || collection.type == 'series'}
+			{#if settings.moviedbApiKey == ''}
+				<p class="text-sm text-yellow-500">TheMovieDB API Key not set in app config settings.</p>
+			{/if}
+		{/if}
 	</div>
 
 	<div class="inline-flex items-center">

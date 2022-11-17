@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
+	import AppSettings from './AppSettings.svelte';
 
 	export let data: PageData;
 </script>
@@ -8,8 +9,10 @@
 	<title>Zeta Library | Create and save your personal collections</title>
 </svelte:head>
 
-<div class="">
+<div class="flex items-center justify-between">
 	<p class="text-gray-600">My Collections</p>
+
+	<AppSettings settings={data.settings} />
 </div>
 
 <div class="w-11/12 mx-auto grid grid-cols-3 gap-12 mt-6">

@@ -7,8 +7,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 )
 
-const reserved_base_name = "_all_collections"
-
 var CreateCollection = func(c *fiber.Ctx) error {
 	body := &lib.CollectionProps{}
 
@@ -19,13 +17,6 @@ var CreateCollection = func(c *fiber.Ctx) error {
 		})
 	}
 
-	if body.Name == reserved_base_name {
-		return c.Status(400).JSON(lib.APIResponse{
-			Error:   true,
-			Message: fmt.Sprintf("Cannot use reserved base name `%s`", reserved_base_name),
-		})
-	}
-
 	if !lib.Includes(body.Type, lib.CollectionTypes) {
 		return c.Status(400).JSON(lib.APIResponse{
 			Error:   true,
@@ -33,7 +24,7 @@ var CreateCollection = func(c *fiber.Ctx) error {
 		})
 	}
 
-	db, err := lib.InitBase("_all_collections")
+	db, err := lib.InitBase(lib.RESERVED_BASE_NAME)
 	if err != nil {
 		return c.Status(500).JSON(lib.APIResponse{
 			Error:   true,

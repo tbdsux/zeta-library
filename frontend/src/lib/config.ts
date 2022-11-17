@@ -1,7 +1,5 @@
-import { PUBLIC_API_URL, PUBLIC_IS_DEV, PUBLIC_THEMOVIEDB_API_KEY } from '$env/static/public';
+import { dev } from '$app/environment';
 
-const isDev = PUBLIC_IS_DEV == 'true';
-const apiUrl = isDev ? PUBLIC_API_URL : '/api';
-const moviedbKey = PUBLIC_THEMOVIEDB_API_KEY ?? '';
+const apiUrl = dev ? 'http://localhost:8080' : '/api';
 
-export { apiUrl, isDev, moviedbKey };
+export { apiUrl };

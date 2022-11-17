@@ -13,7 +13,7 @@
 	<title>{data.collection.name} - Collection</title>
 </svelte:head>
 
-<Context collection={data.collection} items={data.items}>
+<Context {data}>
 	<div class="flex items-center justify-between">
 		<div>
 			<div class="inline-flex items-center">

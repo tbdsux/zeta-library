@@ -1,8 +1,8 @@
 import { MOVIE_API, SERIES_API, TMDB_IMG } from './api';
 import type { CollectionItemProps } from './props';
 
-export const seriesFetcher = async (query: string) => {
-	const r = await fetch(SERIES_API.replace('[query]', query));
+export const seriesFetcher = async (query: string, apiKey: string) => {
+	const r = await fetch(SERIES_API.replace('[query]', query).replace('[apikey]', apiKey));
 	const data = await r.json();
 
 	const results: CollectionItemProps[] = [];
@@ -19,8 +19,8 @@ export const seriesFetcher = async (query: string) => {
 	return results;
 };
 
-export const movieFetcher = async (query: string) => {
-	const r = await fetch(MOVIE_API.replace('[query]', query));
+export const movieFetcher = async (query: string, apiKey: string) => {
+	const r = await fetch(MOVIE_API.replace('[query]', query).replace('[apikey]', apiKey));
 	const data = await r.json();
 
 	const results: CollectionItemProps[] = [];

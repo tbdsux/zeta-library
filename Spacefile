@@ -5,11 +5,7 @@ micros:
     src: ./frontend
     engine: svelte-kit
     primary: true
-    presets:
-      env:
-        - name: PUBLIC_THEMOVIEDB_API_KEY
-          description: Your API Key from TheMovieDb.org
-          default: ""
+
   - name: api
     src: ./api
     engine: custom

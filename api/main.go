@@ -5,6 +5,7 @@ import (
 
 	col "github.com/TheBoringDude/zeta-library/api/routes/collection"
 	"github.com/TheBoringDude/zeta-library/api/routes/items"
+	"github.com/TheBoringDude/zeta-library/api/routes/settings"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 )
@@ -39,6 +40,10 @@ func main() {
 	_items.Patch("/", items.UpdateItems)
 	_items.Get("/:id", items.FetchItems)
 	_items.Delete("/:id/:itemId", items.RemoveItem)
+
+	// `/settings` route
+	app.Patch("/settings", settings.UpdateSettings)
+	app.Get("/settings", settings.GetSettings)
 
 	app.Listen(":8080")
 }

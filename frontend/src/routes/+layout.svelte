@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import '../app.css';
 
 	import '@fontsource/work-sans/300.css';
@@ -17,7 +17,9 @@
 			<p class="text-sm text-gray-700">Your personal library collections</p>
 		</a>
 
-		<NewCollection />
+		<div class="inline-flex items-stretch">
+			<NewCollection />
+		</div>
 	</div>
 </header>
 

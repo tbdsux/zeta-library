@@ -5,9 +5,10 @@ import type { CollectionProps } from '$lib/types/collection';
 import { error } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
 
-export const load: PageLoad = async ({ fetch, params }) => {
+export const load: PageLoad = async ({ fetch, params, parent }) => {
 	const colRes = await fetch(apiUrl + `/collections/get/${params.id}`);
 	const itemsRes = await fetch(apiUrl + `/items/${params.id}`);
+	const { settings } = await parent();
 
 	const colData: APIResponseProps<CollectionProps> = await colRes.json();
 	const itemsData: APIResponseProps<CollectionItemProps[]> = await itemsRes.json();
@@ -22,6 +23,7 @@ export const load: PageLoad = async ({ fetch, params }) => {
 
 	return {
 		collection: colData.data,
-		items: itemsData.data
+		items: itemsData.data,
+		settings
 	};
 };
