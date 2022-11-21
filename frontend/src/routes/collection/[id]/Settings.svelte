@@ -57,7 +57,7 @@
 		}
 
 		// re-load
-		invalidate(apiUrl + `/collections/get/${collection.id}`);
+		invalidate('load:items');
 
 		updating = false;
 

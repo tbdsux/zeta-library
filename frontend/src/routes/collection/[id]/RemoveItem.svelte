@@ -28,7 +28,7 @@
 		}
 
 		// re-load fetch
-		invalidate(apiUrl + `/items/${collectionId}`);
+		invalidate('load:items');
 
 		removing = false;
 

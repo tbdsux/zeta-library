@@ -34,7 +34,7 @@
 		}
 
 		// re-load
-		invalidate(apiUrl + '/settings');
+		invalidate('load:settings');
 
 		updating = false;
 	};
