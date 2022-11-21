@@ -66,7 +66,7 @@
 		}
 
 		// re-load fetch
-		invalidate(apiUrl + `/items/${collection.id}`);
+		invalidate("load:items");
 
 		saving = false;
 

@@ -1,11 +1,13 @@
-import { apiUrl } from '$lib/config';
+import { fetchHeaders, serverApiUrl } from '$lib/server/config';
 import type { APIResponseProps } from '$lib/types/api';
 import type { CollectionProps } from '$lib/types/collection';
 import { error } from '@sveltejs/kit';
-import type { PageLoad } from './$types';
+import type { PageServerLoad } from './$types';
 
-export const load: PageLoad = async ({ fetch, parent }) => {
-	const res = await fetch(apiUrl + `/collections`);
+export const load: PageServerLoad = async ({ fetch, parent }) => {
+	const res = await fetch(serverApiUrl + `/collections`, {
+		headers: fetchHeaders
+	});
 	const data: APIResponseProps<CollectionProps[]> = await res.json();
 
 	const { settings } = await parent();

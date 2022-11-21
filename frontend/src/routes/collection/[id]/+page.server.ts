@@ -1,14 +1,20 @@
-import { apiUrl } from '$lib/config';
+import { fetchHeaders, serverApiUrl } from '$lib/server/config';
 import type { CollectionItemProps } from '$lib/items/props';
 import type { APIResponseProps } from '$lib/types/api';
 import type { CollectionProps } from '$lib/types/collection';
 import { error } from '@sveltejs/kit';
-import type { PageLoad } from './$types';
+import type { PageServerLoad } from './$types';
 
-export const load: PageLoad = async ({ fetch, params, parent }) => {
-	const colRes = await fetch(apiUrl + `/collections/get/${params.id}`);
-	const itemsRes = await fetch(apiUrl + `/items/${params.id}`);
+export const load: PageServerLoad = async ({ fetch, params, parent, depends }) => {
+	const colRes = await fetch(serverApiUrl + `/collections/get/${params.id}`, {
+		headers: fetchHeaders
+	});
+	const itemsRes = await fetch(serverApiUrl + `/items/${params.id}`, {
+		headers: fetchHeaders
+	});
 	const { settings } = await parent();
+
+	depends('load:items');
 
 	const colData: APIResponseProps<CollectionProps> = await colRes.json();
 	const itemsData: APIResponseProps<CollectionItemProps[]> = await itemsRes.json();

@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { PageData } from './$types';
+	import type { PageServerData } from './$types';
 	import AppSettings from './AppSettings.svelte';
 
-	export let data: PageData;
+	export let data: PageServerData;
 </script>
 
 <svelte:head>

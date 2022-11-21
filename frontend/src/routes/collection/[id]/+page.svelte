@@ -2,11 +2,11 @@
 	import { ExternalLinkIcon } from '@rgossiaux/svelte-heroicons/solid';
 	import AddItem from './AddItem.svelte';
 	import Settings from './Settings.svelte';
-	import type { PageData } from './$types';
+	import type { PageServerData } from './$types';
 	import RemoveItem from './RemoveItem.svelte';
 	import Context from './Context.svelte';
 
-	export let data: PageData;
+	export let data: PageServerData;
 </script>
 
 <svelte:head>

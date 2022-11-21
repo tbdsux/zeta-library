@@ -1,11 +1,15 @@
-import { apiUrl } from '$lib/config';
+import { fetchHeaders, serverApiUrl } from '$lib/server/config';
 import type { SettingsProps } from '$lib/settings';
 import type { APIResponseProps } from '$lib/types/api';
 import { error } from '@sveltejs/kit';
-import type { LayoutLoad } from './$types';
+import type { LayoutServerLoad } from './$types';
 
-export const load: LayoutLoad = async ({ fetch }) => {
-	const r = await fetch(apiUrl + '/settings');
+export const load: LayoutServerLoad = async ({ fetch, depends }) => {
+	const r = await fetch(serverApiUrl + '/settings', {
+		headers: fetchHeaders
+	});
+	depends('load:settings');
+
 	const data: APIResponseProps<SettingsProps> = await r.json();
 
 	if (!r.ok) {
