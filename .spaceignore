@@ -1,0 +1,11 @@
+# ignore sveltekit output
+node_modules
+build
+.svelte-kit
+
+# golang dev files
+api/api
+tmp
+
+# custom environment variables
+.env
