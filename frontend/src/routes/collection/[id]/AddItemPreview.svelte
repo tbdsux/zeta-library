@@ -24,7 +24,9 @@
 <Modal {isOpen} closeModal={() => (isOpen = false)} className="max-w-4xl p-6">
 	<DialogTitle class="font-medium text-gray-700">Preview selected items</DialogTitle>
 
-	<div class="grid grid-cols-4 gap-6 min-h-[24rem] max-h-screen overflow-auto mt-6">
+	<div
+		class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-8 min-h-[24rem] max-h-screen overflow-auto mt-6"
+	>
 		{#each selectedItems as item}
 			<div class="group relative w-full h-full">
 				{#if selectedIds.includes(item.item_id)}

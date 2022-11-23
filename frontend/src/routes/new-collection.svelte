@@ -163,10 +163,11 @@
 </Modal>
 
 <button
+	title="New Collection"
 	on:click={() => (isOpen = true)}
 	class="inline-flex items-center py-2 px-6 rounded-lg bg-indigo-400 hover:bg-indigo-500 duration-300 text-white"
 >
 	<FolderAddIcon class="h-4 w-4 mr-1" aria-hidden="true" />
 
-	<small>new collection</small>
+	<small class="hidden sm:block">new collection</small>
 </button>

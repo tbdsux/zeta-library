@@ -66,7 +66,7 @@
 		}
 
 		// re-load fetch
-		invalidate("load:items");
+		invalidate('load:items');
 
 		saving = false;
 
@@ -75,8 +75,8 @@
 	};
 </script>
 
-<div class="flex items-center justify-between">
-	<div>
+<div class="flex flex-wrap items-center justify-between">
+	<div class="m-2">
 		<DialogTitle class="text-xl font-extrabold text-gray-700">Add Items</DialogTitle>
 		<DialogDescription class="text-gray-600">
 			Add items to the collection
@@ -90,7 +90,7 @@
 		{/if}
 	</div>
 
-	<div class="inline-flex items-center">
+	<div class="inline-flex flex-wrap justify-center items-center m-2">
 		<input
 			bind:value={inputQuery}
 			type="text"
@@ -106,7 +106,7 @@
 			<SearchIcon class="h-4 w-4" aria-hidden="true" />
 		</button>
 
-		<div class="inline-flex items-stretch ml-6 ">
+		<div class="inline-flex items-stretch ml-6 m-1">
 			<AddItemPreview bind:selectedItems bind:selectedIds />
 
 			<button

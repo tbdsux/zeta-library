@@ -15,7 +15,9 @@
 	<AppSettings settings={data.settings} />
 </div>
 
-<div class="w-11/12 mx-auto grid grid-cols-3 gap-12 mt-6">
+<div
+	class="w-11/12 mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 4xl:grid-cols-5 gap-12 mt-6"
+>
 	{#each data.collections.sort((x, y) => y.created_at - x.created_at) as collection}
 		<a
 			href={`/collection/${collection.id}`}

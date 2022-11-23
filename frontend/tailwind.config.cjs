@@ -7,8 +7,12 @@ module.exports = {
 		extend: {
 			fontFamily: {
 				sans: ['"Work Sans"', ...defaultTheme.fontFamily.sans]
+			},
+			screens: {
+				'3xl': '1792px',
+				'4xl': '2048px'
 			}
 		}
 	},
-	plugins: [require("@tailwindcss/line-clamp")]
+	plugins: [require('@tailwindcss/line-clamp')]
 };

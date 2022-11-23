@@ -6,7 +6,7 @@
 	let isOpen = false;
 </script>
 
-<Modal {isOpen} closeModal={() => (isOpen = false)} className="max-w-6xl p-6">
+<Modal {isOpen} closeModal={() => (isOpen = false)} className="max-w-6xl 2xl:max-w-7xl p-6">
 	<AddItemContainer bind:isOpen />
 </Modal>
 

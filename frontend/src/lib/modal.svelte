@@ -8,7 +8,7 @@
 
 <Transition appear show={isOpen}>
 	<Dialog as="div" class="fixed inset-0 z-10 overflow-y-auto" on:close={closeModal}>
-		<div class="min-h-screen px-4 text-center">
+		<div class="min-h-screen px-4 text-center flex items-center justify-center">
 			<TransitionChild
 				enter="ease-out duration-300"
 				enterFrom="opacity-0"
@@ -21,7 +21,7 @@
 			</TransitionChild>
 
 			<!-- This element is to trick the browser into centering the modal contents. -->
-			<span class="inline-block h-screen align-middle" aria-hidden="true"> &#8203; </span>
+			<!-- <span class="inline-block h-screen align-middle" aria-hidden="true"> &#8203; </span> -->
 
 			<div
 				class={`inline-block w-full p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl ${className}`}

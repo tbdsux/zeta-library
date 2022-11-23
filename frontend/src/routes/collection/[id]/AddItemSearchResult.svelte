@@ -28,7 +28,7 @@
 	};
 </script>
 
-<div class="grid grid-cols-4 gap-8">
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-8">
 	{#each searchResults as result}
 		<div class="group relative shadow rounded-lg">
 			{#if itemsKeys.includes(result.item_id)}

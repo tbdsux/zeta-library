@@ -14,7 +14,7 @@
 </svelte:head>
 
 <Context {data}>
-	<div class="flex items-center justify-between">
+	<div class="flex flex-wrap items-center justify-between">
 		<div>
 			<div class="inline-flex items-center">
 				<h3 class="text-4xl font-black text-indigo-500">{data.collection.name}</h3>
@@ -36,7 +36,9 @@
 
 	<hr class="my-6" />
 
-	<div class="grid grid-cols-5 gap-6">
+	<div
+		class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 3xl:grid-cols-7 4xl:grid-cols-8 gap-6"
+	>
 		{#each data.items.sort((x, y) => Number(y.date_added) - Number(x.date_added)) as item}
 			<div class="group relative shadow rounded-lg">
 				<div
