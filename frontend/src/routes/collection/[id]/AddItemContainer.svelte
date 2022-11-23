@@ -92,6 +92,11 @@
 
 	<div class="inline-flex flex-wrap justify-center items-center m-2">
 		<input
+			on:keydown={async (e) => {
+				if (e.key === 'Enter') {
+					await search();
+				}
+			}}
 			bind:value={inputQuery}
 			type="text"
 			name="search"
