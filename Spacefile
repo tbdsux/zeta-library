@@ -1,5 +1,7 @@
 # Spacefile Docs: https://go.deta.dev/docs/spacefile/v0
 v: 0
+icon: icon.png
+app_name: "Zeta Library"
 micros:
   - name: zeta-library
     src: ./frontend
