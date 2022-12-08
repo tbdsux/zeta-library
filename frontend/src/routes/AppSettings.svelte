@@ -3,6 +3,7 @@
 	import { apiUrl } from '$lib/config';
 	import Modal from '$lib/modal.svelte';
 	import type { SettingsProps } from '$lib/settings';
+	import toast from 'svelte-french-toast';
 	import { DialogDescription, DialogTitle } from '@rgossiaux/svelte-headlessui';
 	import { CogIcon, PencilIcon } from '@rgossiaux/svelte-heroicons/solid';
 
@@ -27,16 +28,17 @@
 			},
 			body: JSON.stringify({ moviedbApiKey: inputApiKey })
 		});
+
 		const data = await r.json();
+		updating = false;
 
 		if (!r.ok) {
-			// handle error in here
+			toast.error(data.message);
+			return;
 		}
 
 		// re-load
 		invalidate('load:settings');
-
-		updating = false;
 	};
 </script>
 

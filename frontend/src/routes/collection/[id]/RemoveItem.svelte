@@ -2,6 +2,7 @@
 	import { invalidate } from '$app/navigation';
 	import { apiUrl } from '$lib/config';
 	import type { CollectionItemProps } from '$lib/items/props';
+	import toast from 'svelte-french-toast';
 	import Modal from '$lib/modal.svelte';
 	import { DialogDescription, DialogTitle } from '@rgossiaux/svelte-headlessui';
 	import { ArrowLeftIcon, TrashIcon, XIcon } from '@rgossiaux/svelte-heroicons/solid';
@@ -23,8 +24,8 @@
 		const data = await r.json();
 
 		if (!r.ok) {
-			// handle error
-			console.log(data);
+			toast.error(data.message);
+			return;
 		}
 
 		// re-load fetch

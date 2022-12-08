@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import toast from 'svelte-french-toast';
 	import { collectionTypes } from '$lib/collection';
 	import { apiUrl } from '$lib/config';
 	import Modal from '$lib/modal.svelte';
@@ -12,12 +13,7 @@
 		ListboxOptions,
 		Transition
 	} from '@rgossiaux/svelte-headlessui';
-	import {
-		SelectorIcon,
-		CheckIcon,
-		DocumentAddIcon,
-		FolderAddIcon
-	} from '@rgossiaux/svelte-heroicons/solid';
+	import { SelectorIcon, CheckIcon, FolderAddIcon } from '@rgossiaux/svelte-heroicons/solid';
 
 	let selectedType = collectionTypes[0];
 	let inputName: string = '';
@@ -44,7 +40,8 @@
 		const data = await r.json();
 
 		if (!r.ok) {
-			// error in here
+			toast.error(data.message);
+			return;
 		}
 
 		isOpen = false;

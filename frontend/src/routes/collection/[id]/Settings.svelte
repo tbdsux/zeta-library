@@ -2,6 +2,7 @@
 	import { invalidate } from '$app/navigation';
 	import { collectionTypes, filterCollection } from '$lib/collection';
 	import { apiUrl } from '$lib/config';
+	import toast from 'svelte-french-toast';
 	import Modal from '$lib/modal.svelte';
 	import {
 		DialogDescription,
@@ -29,8 +30,6 @@
 	let updating = false;
 
 	const updateCollection = async () => {
-		updating = true;
-
 		const body: Record<string, any> = {};
 
 		if (inputNewName.trim() != $state.collection.name) {
@@ -45,6 +44,8 @@
 			return;
 		}
 
+		updating = true;
+
 		const r = await fetch(apiUrl + `/collections/${$state.collection.id}`, {
 			method: 'PATCH',
 			body: JSON.stringify(body),
@@ -54,14 +55,15 @@
 		});
 
 		const data = await r.json();
+		updating = false;
+
 		if (!r.ok) {
-			// error in here
+			toast.error(data.message);
+			return;
 		}
 
 		// re-load
 		invalidate('load:items');
-
-		updating = false;
 
 		// close modal
 		isOpen = false;

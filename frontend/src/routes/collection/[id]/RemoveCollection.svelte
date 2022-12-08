@@ -4,6 +4,7 @@
 	import Modal from '$lib/modal.svelte';
 	import { DialogDescription, DialogTitle } from '@rgossiaux/svelte-headlessui';
 	import { ArrowLeftIcon, TrashIcon } from '@rgossiaux/svelte-heroicons/solid';
+	import toast from 'svelte-french-toast';
 	import { getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
 	import { additemKey, type ContextProps } from './context';
@@ -23,8 +24,8 @@
 		const data = await r.json();
 
 		if (!r.ok) {
-			// handle error
-			console.log(data);
+			toast.error(data.message);
+			return;
 		}
 
 		removing = false;
