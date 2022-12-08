@@ -4,9 +4,11 @@
 	import Modal from '$lib/modal.svelte';
 	import { DialogDescription, DialogTitle } from '@rgossiaux/svelte-headlessui';
 	import { ArrowLeftIcon, TrashIcon } from '@rgossiaux/svelte-heroicons/solid';
-	import { getPageContext } from './context';
+	import { getContext } from 'svelte';
+	import type { Writable } from 'svelte/store';
+	import { additemKey, type ContextProps } from './context';
 
-	const { collection } = getPageContext();
+	let state = getContext<Writable<ContextProps>>(additemKey);
 
 	let isOpen = false;
 	let removing = false;
@@ -14,7 +16,7 @@
 	const removeCollection = async () => {
 		removing = true;
 
-		const r = await fetch(apiUrl + `/collections/${collection.id}`, {
+		const r = await fetch(apiUrl + `/collections/${$state.collection.id}`, {
 			method: 'DELETE'
 		});
 

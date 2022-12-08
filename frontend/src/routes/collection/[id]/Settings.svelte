@@ -3,7 +3,6 @@
 	import { collectionTypes, filterCollection } from '$lib/collection';
 	import { apiUrl } from '$lib/config';
 	import Modal from '$lib/modal.svelte';
-	import type { CollectionProps } from '$lib/types/collection';
 	import {
 		DialogDescription,
 		DialogTitle,
@@ -14,15 +13,18 @@
 		Transition
 	} from '@rgossiaux/svelte-headlessui';
 	import { CheckIcon, CogIcon, PencilIcon, SelectorIcon } from '@rgossiaux/svelte-heroicons/solid';
-	import { getPageContext } from './context';
+	import { getContext } from 'svelte';
+	import type { Writable } from 'svelte/store';
+	import { additemKey, type ContextProps } from './context';
+
 	import RemoveCollection from './RemoveCollection.svelte';
 
-	const { collection } = getPageContext();
+	let state = getContext<Writable<ContextProps>>(additemKey);
 
 	let isOpen = false;
-	let inputNewName = collection.name;
-	let newSelectedType = filterCollection(collection.type) ?? collectionTypes[0];
-	let inputNewDescription = collection.description;
+	let inputNewName = $state.collection.name;
+	let newSelectedType = filterCollection($state.collection.type) ?? collectionTypes[0];
+	let inputNewDescription = $state.collection.description;
 
 	let updating = false;
 
@@ -31,10 +33,10 @@
 
 		const body: Record<string, any> = {};
 
-		if (inputNewName.trim() != collection.name) {
+		if (inputNewName.trim() != $state.collection.name) {
 			body.name = inputNewName.trim();
 		}
-		if (inputNewDescription.trim() != collection.description) {
+		if (inputNewDescription.trim() != $state.collection.description) {
 			body.description = inputNewDescription.trim();
 		}
 
@@ -43,7 +45,7 @@
 			return;
 		}
 
-		const r = await fetch(apiUrl + `/collections/${collection.id}`, {
+		const r = await fetch(apiUrl + `/collections/${$state.collection.id}`, {
 			method: 'PATCH',
 			body: JSON.stringify(body),
 			headers: {
@@ -82,7 +84,7 @@
 		<div class="flex flex-col my-1">
 			<label for="collection-id" class="text-gray-700">ID / Key</label>
 			<input
-				value={collection.id}
+				value={$state.collection.id}
 				type="text"
 				name="collection-id"
 				id=""

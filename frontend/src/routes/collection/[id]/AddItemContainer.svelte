@@ -1,77 +1,44 @@
 <script lang="ts">
-	import { invalidate } from '$app/navigation';
-	import { apiUrl } from '$lib/config';
 	import { fetcher } from '$lib/items/fetcher';
 	import type { CollectionItemProps } from '$lib/items/props';
 	import { DialogDescription, DialogTitle } from '@rgossiaux/svelte-headlessui';
 	import { CheckIcon, SearchIcon } from '@rgossiaux/svelte-heroicons/solid';
-	import { getPageContext } from './context';
-	import AddItemPreview from './AddItemPreview.svelte';
+	import { getContext } from 'svelte';
+	import type { Writable } from 'svelte/store';
 	import AddItemSearchResult from './AddItemSearchResult.svelte';
+	import { additemKey, type ContextProps } from './context';
 
-	const { collection, settings } = getPageContext();
+	let state = getContext<Writable<ContextProps>>(additemKey);
+
 	export let isOpen: boolean;
 
 	let inputQuery: string = '';
 	let fetching = false;
 	let error = false;
 
-	let saving = false;
-
 	let searchResults: CollectionItemProps[] = [];
-	let selectedItems: CollectionItemProps[] = [];
-	let selectedIds: string[] = [];
 
 	const search = async () => {
 		if (inputQuery == '') return;
 
 		// do not search if missing api key in app settings
-		if (collection.type == 'movies' || collection.type == 'series') {
-			if (settings.moviedbApiKey == '') return;
+		if ($state.collection.type == 'movies' || $state.collection.type == 'series') {
+			if ($state.settings.moviedbApiKey == '') return;
 		}
 
 		fetching = true;
 
 		try {
-			searchResults = await fetcher[collection.type](inputQuery, settings.moviedbApiKey);
+			searchResults = await fetcher[$state.collection.type](
+				inputQuery,
+				$state.settings.moviedbApiKey
+			);
 		} catch (e) {
 			error = true;
 			console.error(e);
 		}
 
 		fetching = false;
-	};
-
-	const addItems = async () => {
-		saving = true;
-
-		const _body = {
-			id: collection.id,
-			data: selectedItems
-		};
-
-		const r = await fetch(apiUrl + '/items', {
-			method: 'PATCH',
-			body: JSON.stringify(_body),
-			headers: {
-				'content-type': 'application/json'
-			}
-		});
-
-		const data = await r.json();
-
-		if (!r.ok) {
-			// handle error
-			console.log(data);
-		}
-
-		// re-load fetch
-		invalidate('load:items');
-
-		saving = false;
-
-		// close modal
-		isOpen = false;
 	};
 </script>
 
@@ -80,17 +47,17 @@
 		<DialogTitle class="text-xl font-extrabold text-gray-700">Add Items</DialogTitle>
 		<DialogDescription class="text-gray-600">
 			Add items to the collection
-			<span class="font-medium">{collection.name}</span>
+			<span class="font-medium">{$state.collection.name}</span>
 		</DialogDescription>
 
-		{#if collection.type == 'movies' || collection.type == 'series'}
-			{#if settings.moviedbApiKey == ''}
+		{#if $state.collection.type == 'movies' || $state.collection.type == 'series'}
+			{#if $state.settings.moviedbApiKey == ''}
 				<p class="text-sm text-yellow-500">TheMovieDB API Key not set in app config settings.</p>
 			{/if}
 		{/if}
 	</div>
 
-	<div class="inline-flex flex-wrap justify-center items-center m-2">
+	<div class="inline-flex flex-wrap justify-center items-stretch m-2">
 		<input
 			on:keydown={async (e) => {
 				if (e.key === 'Enter') {
@@ -111,25 +78,14 @@
 			<SearchIcon class="h-4 w-4" aria-hidden="true" />
 		</button>
 
-		<div class="inline-flex items-stretch ml-6 m-1">
-			<AddItemPreview bind:selectedItems bind:selectedIds />
-
-			<button
-				on:click={addItems}
-				disabled={saving}
-				title="Done with selection"
-				class="py-2 px-6 rounded-lg ml-1 inline-flex items-center bg-blue-400 disabled:opacity-90 disabled:hover:bg-blue-400 hover:bg-blue-500 text-white duration-300"
-			>
-				<CheckIcon class="h-4 w-4" aria-hidden="true" />
-				<small class="ml-1" title="Done with selection">
-					{#if saving}
-						Saving....
-					{:else}
-						Done
-					{/if}</small
-				>
-			</button>
-		</div>
+		<button
+			on:click={() => (isOpen = false)}
+			title="Done with selection"
+			class="py-2 px-6 rounded-lg ml-2 inline-flex items-center bg-blue-400 disabled:opacity-90 disabled:hover:bg-blue-400 hover:bg-blue-500 text-white duration-300"
+		>
+			<CheckIcon class="h-4 w-4" aria-hidden="true" />
+			<small class="ml-1" title="Done with selection">Done</small>
+		</button>
 	</div>
 </div>
 
@@ -144,6 +100,6 @@
 			developer.
 		</p>
 	{:else}
-		<AddItemSearchResult {searchResults} bind:selectedItems bind:selectedIds />
+		<AddItemSearchResult {searchResults} />
 	{/if}
 </div>

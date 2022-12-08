@@ -7,8 +7,12 @@
 	import '@fontsource/work-sans/700.css';
 	import '@fontsource/work-sans/800.css';
 	import '@fontsource/work-sans/900.css';
+
 	import NewCollection from './new-collection.svelte';
+	import { Toaster } from 'svelte-french-toast';
 </script>
+
+<Toaster />
 
 <header class="py-4">
 	<div class="flex items-center justify-between w-5/6 mx-auto">
