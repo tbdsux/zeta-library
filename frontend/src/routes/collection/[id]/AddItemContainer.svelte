@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { fetcher } from '$lib/items/fetcher';
 	import type { CollectionItemProps } from '$lib/items/props';
+	import Searching from '$lib/Searching.svelte';
 	import { DialogDescription, DialogTitle } from '@rgossiaux/svelte-headlessui';
 	import { CheckIcon, SearchIcon } from '@rgossiaux/svelte-heroicons/solid';
 	import { getContext } from 'svelte';
@@ -93,7 +94,7 @@
 
 <div class="min-h-[24rem] max-h-screen overflow-auto">
 	{#if fetching}
-		<p>Fetching...</p>
+		<Searching />
 	{:else if error}
 		<p>
 			There was a problem trying to search for the query. If problem persists, please report to the
