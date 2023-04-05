@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { invalidate } from '$app/navigation';
-	import { apiUrl } from '$lib/config';
 	import Modal from '$lib/modal.svelte';
 	import type { SettingsProps } from '$lib/settings';
 	import toast from 'svelte-french-toast';
@@ -21,7 +20,7 @@
 
 		updating = true;
 
-		const r = await fetch(apiUrl + '/settings', {
+		const r = await fetch('/api/settings', {
 			method: 'PATCH',
 			headers: {
 				'content-type': 'application/json'

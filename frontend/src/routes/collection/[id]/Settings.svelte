@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { invalidate } from '$app/navigation';
 	import { collectionTypes, filterCollection } from '$lib/collection';
-	import { apiUrl } from '$lib/config';
 	import toast from 'svelte-french-toast';
 	import Modal from '$lib/modal.svelte';
 	import {
@@ -46,7 +45,7 @@
 
 		updating = true;
 
-		const r = await fetch(apiUrl + `/collections/${$state.collection.id}`, {
+		const r = await fetch(`/api/collections/${$state.collection.id}`, {
 			method: 'PATCH',
 			body: JSON.stringify(body),
 			headers: {
@@ -118,11 +117,7 @@
 						</span>
 					</ListboxButton>
 
-					<Transition
-						leave="transition ease-in duration-100"
-						leaveFrom="opacity-100"
-						leaveTo="opacity-0"
-					>
+					<Transition leave="transition ease-in duration-100" leaveTo="opacity-0">
 						<ListboxOptions
 							class="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-40 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
 						>
@@ -132,7 +127,7 @@
 										`cursor-default select-none relative py-2 pl-10 pr-4 ${
 											active ? 'text-gray-900 bg-gray-100' : 'text-gray-700'
 										}`}
-									value={i}
+									value={String(i)}
 									let:selected
 								>
 									<span class={`block truncate ${selected ? 'font-medium' : 'font-normal'}`}>
@@ -167,7 +162,6 @@
 			<label for="collection-description" class="text-gray-700">Description</label>
 			<textarea
 				bind:value={inputNewDescription}
-				type="text"
 				name="collection-description"
 				id=""
 				class="py-2 px-5 rounded-lg border text-gray-700"

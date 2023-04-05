@@ -26,16 +26,10 @@ Your `v3 API Key` should be visible in your [account](https://www.themoviedb.org
 
 ## Development
 
-You need to run both the frontend and backend at the same time.
+Please use the `space` cli when running the dev server.
 
-```sh
-# zeta-library/frontend
-pnpm dev
 ```
-
-```sh
-# zeta-library/api
-air # auto-reload
+space dev
 ```
 
 ## Contributing
