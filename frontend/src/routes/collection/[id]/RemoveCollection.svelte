@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { apiUrl } from '$lib/config';
 	import Modal from '$lib/modal.svelte';
 	import { DialogDescription, DialogTitle } from '@rgossiaux/svelte-headlessui';
 	import { ArrowLeftIcon, TrashIcon } from '@rgossiaux/svelte-heroicons/solid';
@@ -17,7 +16,7 @@
 	const removeCollection = async () => {
 		removing = true;
 
-		const r = await fetch(apiUrl + `/collections/${$state.collection.id}`, {
+		const r = await fetch(`/api/collections/${$state.collection.id}`, {
 			method: 'DELETE'
 		});
 

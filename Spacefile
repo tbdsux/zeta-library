@@ -7,6 +7,7 @@ micros:
     src: ./frontend
     engine: svelte-kit
     primary: true
+    dev: pnpm dev --port ${PORT}
 
   - name: api
     src: ./api
@@ -18,3 +19,4 @@ micros:
     include:
       - api
     path: api
+    dev: air

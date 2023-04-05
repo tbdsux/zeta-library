@@ -2,6 +2,8 @@ package main
 
 import (
 	"flag"
+	"fmt"
+	"os"
 
 	col "github.com/TheBoringDude/zeta-library/api/routes/collection"
 	"github.com/TheBoringDude/zeta-library/api/routes/items"
@@ -18,6 +20,7 @@ func main() {
 	app := fiber.New(fiber.Config{
 		Prefork: *prod,
 	})
+	port := getPort()
 
 	// use cors middleware
 	app.Use(cors.New())
@@ -45,5 +48,14 @@ func main() {
 	app.Patch("/settings", settings.UpdateSettings)
 	app.Get("/settings", settings.GetSettings)
 
-	app.Listen(":8080")
+	app.Listen(fmt.Sprintf(":%s", port))
+}
+
+func getPort() string {
+	port := os.Getenv("PORT")
+	if port == "" {
+		return "8080"
+	}
+
+	return port
 }

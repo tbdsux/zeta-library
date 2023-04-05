@@ -2,7 +2,6 @@
 	import { goto } from '$app/navigation';
 	import toast from 'svelte-french-toast';
 	import { collectionTypes } from '$lib/collection';
-	import { apiUrl } from '$lib/config';
 	import Modal from '$lib/modal.svelte';
 	import type { PartialCollectionProps } from '$lib/types/collection';
 	import {
@@ -30,7 +29,7 @@
 			created_at: Math.floor(new Date().getTime() / 1000)
 		};
 
-		const r = await fetch(apiUrl + '/collections/create', {
+		const r = await fetch('/api/collections/create', {
 			method: 'POST',
 			headers: {
 				'content-type': 'application/json'
@@ -104,7 +103,7 @@
 										`cursor-default select-none relative py-2 pl-10 pr-4 ${
 											active ? 'text-gray-900 bg-gray-100' : 'text-gray-700'
 										}`}
-									value={i}
+									value={String(i)}
 									let:selected
 								>
 									<span class={`block truncate ${selected ? 'font-medium' : 'font-normal'}`}>
@@ -127,7 +126,6 @@
 			<label for="collection-description" class="text-gray-700">Description</label>
 			<textarea
 				bind:value={inputDescription}
-				type="text"
 				name="collection-description"
 				id=""
 				class="py-2 px-5 rounded-lg border text-gray-700"

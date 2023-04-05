@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { apiUrl } from '$lib/config';
 	import type { CollectionItemProps } from '$lib/items/props';
 	import { CheckIcon, ExternalLinkIcon, PlusCircleIcon } from '@rgossiaux/svelte-heroicons/solid';
 
@@ -27,7 +26,7 @@
 
 		adding = true;
 
-		const r = await fetch(apiUrl + '/items', {
+		const r = await fetch('/api/items', {
 			method: 'PATCH',
 			body: JSON.stringify(body),
 			headers: {

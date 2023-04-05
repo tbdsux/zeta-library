@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { invalidate } from '$app/navigation';
-	import { apiUrl } from '$lib/config';
 	import type { CollectionItemProps } from '$lib/items/props';
 	import toast from 'svelte-french-toast';
 	import Modal from '$lib/modal.svelte';
@@ -17,7 +16,7 @@
 		removing = true;
 		const key = item.key;
 
-		const r = await fetch(apiUrl + `/items/${collectionId}/${key}`, {
+		const r = await fetch(`/api/items/${collectionId}/${key}`, {
 			method: 'DELETE'
 		});
 
