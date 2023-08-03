@@ -19,7 +19,7 @@
 		"@rgossiaux/svelte-heroicons": "^0.1.2",
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/adapter-node": "1.2.3",
-		"@sveltejs/kit": "^1.15.0",
+		"@sveltejs/kit": "^1.15.2",
 		"@tailwindcss/line-clamp": "^0.4.4",
 		"@typescript-eslint/eslint-plugin": "^5.57.1",
 		"@typescript-eslint/parser": "^5.57.1",
