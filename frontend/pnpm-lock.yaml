@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 devDependencies:
   '@fontsource/work-sans':
     specifier: ^4.5.14
@@ -15,13 +19,13 @@ devDependencies:
     version: 0.1.2(svelte@3.58.0)
   '@sveltejs/adapter-auto':
     specifier: next
-    version: 1.0.0-next.91(@sveltejs/kit@1.15.0)
+    version: 1.0.0-next.91(@sveltejs/kit@1.15.2)
   '@sveltejs/adapter-node':
     specifier: 1.2.3
-    version: 1.2.3(@sveltejs/kit@1.15.0)
+    version: 1.2.3(@sveltejs/kit@1.15.2)
   '@sveltejs/kit':
-    specifier: ^1.15.0
-    version: 1.15.0(svelte@3.58.0)(vite@4.2.1)
+    specifier: ^1.15.2
+    version: 1.15.2(svelte@3.58.0)(vite@4.2.1)
   '@tailwindcss/line-clamp':
     specifier: ^0.4.4
     version: 0.4.4(tailwindcss@3.3.1)
@@ -471,16 +475,16 @@ packages:
       rollup: 3.20.2
     dev: true
 
-  /@sveltejs/adapter-auto@1.0.0-next.91(@sveltejs/kit@1.15.0):
+  /@sveltejs/adapter-auto@1.0.0-next.91(@sveltejs/kit@1.15.2):
     resolution: {integrity: sha512-U57tQdzTfFINim8tzZSARC9ztWPzwOoHwNOpGdb2o6XrD0mEQwU9DsII7dBblvzg+xCnmd0pw7PDtXz5c5t96w==}
     peerDependencies:
       '@sveltejs/kit': ^1.0.0-next.587
     dependencies:
-      '@sveltejs/kit': 1.15.0(svelte@3.58.0)(vite@4.2.1)
+      '@sveltejs/kit': 1.15.2(svelte@3.58.0)(vite@4.2.1)
       import-meta-resolve: 2.2.2
     dev: true
 
-  /@sveltejs/adapter-node@1.2.3(@sveltejs/kit@1.15.0):
+  /@sveltejs/adapter-node@1.2.3(@sveltejs/kit@1.15.2):
     resolution: {integrity: sha512-Fv6NyVpVWYA63KRaV6dDjcU8ytcWFiUr0siJOoHl+oWy5WHNEuRiJOUdiZzYbZo8MmvFaCoxHkTgPrVQhpqaRA==}
     peerDependencies:
       '@sveltejs/kit': ^1.0.0
@@ -488,12 +492,12 @@ packages:
       '@rollup/plugin-commonjs': 24.0.1(rollup@3.20.2)
       '@rollup/plugin-json': 6.0.0(rollup@3.20.2)
       '@rollup/plugin-node-resolve': 15.0.2(rollup@3.20.2)
-      '@sveltejs/kit': 1.15.0(svelte@3.58.0)(vite@4.2.1)
+      '@sveltejs/kit': 1.15.2(svelte@3.58.0)(vite@4.2.1)
       rollup: 3.20.2
     dev: true
 
-  /@sveltejs/kit@1.15.0(svelte@3.58.0)(vite@4.2.1):
-    resolution: {integrity: sha512-fvDsW9msxWjDU/j9wwLlxEZ6cpXQYcmcQHq7neJMqibMEl39gI1ztVymGnYqM8KLqZXwNmhKtLu8EPheukKtXQ==}
+  /@sveltejs/kit@1.15.2(svelte@3.58.0)(vite@4.2.1):
+    resolution: {integrity: sha512-rLNxZrjbrlPf8AWW8GAU4L/Vvu17e9v8EYl7pUip7x72lTft7RcxeP3z7tsrHpMSBBxC9o4XdKzFvz1vMZyXZw==}
     engines: {node: ^16.14 || >=18}
     hasBin: true
     requiresBuild: true
@@ -514,7 +518,7 @@ packages:
       sirv: 2.0.2
       svelte: 3.58.0
       tiny-glob: 0.2.9
-      undici: 5.21.0
+      undici: 5.20.0
       vite: 4.2.1
     transitivePeerDependencies:
       - supports-color
@@ -2316,8 +2320,8 @@ packages:
     hasBin: true
     dev: true
 
-  /undici@5.21.0:
-    resolution: {integrity: sha512-HOjK8l6a57b2ZGXOcUsI5NLfoTrfmbOl90ixJDl0AEFG4wgHNDQxtZy15/ZQp7HhjkpaGlp/eneMgtsu1dIlUA==}
+  /undici@5.20.0:
+    resolution: {integrity: sha512-J3j60dYzuo6Eevbawwp1sdg16k5Tf768bxYK4TUJRH7cBM4kFCbf3mOnM/0E3vQYXvpxITbbWmBafaDbxLDz3g==}
     engines: {node: '>=12.18'}
     dependencies:
       busboy: 1.6.0
